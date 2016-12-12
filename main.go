@@ -2,7 +2,6 @@ package main
 
 import (
   "os/exec"
-  "fmt"
   "net/http"
   "os"
   "io"
@@ -49,5 +48,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
   if err1 != nil {
     panic("error rendering")
   }
-  fmt.Fprintf(w, "<a href=/result/>Result</a>")
+  http.ServeFile(w, r, "/result.html")
 }
