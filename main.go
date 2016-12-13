@@ -7,14 +7,6 @@ import (
   "io"
 )
 
-func fibbRecc(numIndex int) (numValue int){
-  if numIndex == 0 || numIndex == 1 {
-    return numIndex
-  }
-
-  return fibbRecc(numIndex - 2) + fibbRecc(numIndex -1)
-}
-
 func indexHandler(w http.ResponseWriter, r *http.Request) {
   http.ServeFile(w, r, "/index.html")
 }
