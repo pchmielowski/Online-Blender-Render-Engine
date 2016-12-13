@@ -1,6 +1,4 @@
-FROM golang:1.6-onbuild
+FROM go_and_blender
 COPY index.html /index.html
 COPY result.html /result.html
 COPY run.bash /run.bash
-RUN apt-get update
-RUN apt-get install -y time blender
