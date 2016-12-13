@@ -3,4 +3,4 @@ COPY index.html /index.html
 COPY result.html /result.html
 COPY run.bash /run.bash
 RUN apt-get update
-RUN apt-get install -y blender
+RUN apt-get install -y time blender

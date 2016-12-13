@@ -3,8 +3,10 @@ package main
 import (
   "os/exec"
   "net/http"
+  "html/template"
   "os"
   "io"
+  "io/ioutil"
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +30,6 @@ func handler(w http.ResponseWriter, r *http.Request) {
     panic("error creating")
   }
   defer out.Close()
-
   r.ParseMultipartForm(32 << 20)
   file, _, err := r.FormFile("file")
   if err != nil {
@@ -36,9 +37,14 @@ func handler(w http.ResponseWriter, r *http.Request) {
   }
   defer file.Close()
   io.Copy(out, file)
-  _, err1 := exec.Command("/bin/bash", "/run.bash").Output()
+
+  cmd := exec.Command("/bin/bash", "/run.bash")
+  err1 := cmd.Run()
   if err1 != nil {
-    panic("error rendering")
+    panic(err1)
   }
-  http.ServeFile(w, r, "/result.html")
+
+  time, _ := ioutil.ReadFile("/time")
+  t, _ := template.ParseFiles("/result.html")
+  t.Execute(w, string(time))
 }
